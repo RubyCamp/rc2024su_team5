@@ -12,7 +12,7 @@ class MainWindow < Gosu::Window
   # 各種定数定義
   WIDTH = 800
   HEIGHT = 600
-  FULL_SCREEN = false
+  FULL_SCREEN = true
 
   # コンストラクタ
   def initialize
