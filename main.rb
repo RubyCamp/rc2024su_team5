@@ -1,5 +1,5 @@
 require 'gosu'
-
+require_relative 'user'
 # ゲームのメインウィンドウ（メインループ）用クラス
 class MainWindow < Gosu::Window
   # 各種定数定義
@@ -11,6 +11,7 @@ class MainWindow < Gosu::Window
   def initialize
     super WIDTH, HEIGHT, FULL_SCREEN
     self.caption = 'RubyCamp2024Summer team5'
+    @user = User.new
   end
 
   # 1フレーム分の更新処理
