@@ -3,25 +3,25 @@ module Scenes
     class Referee
       def judge_role(hand)
         if royal_straight_flush?(hand)
-          return :royal_straight_flush
+          :royal_straight_flush
         elsif straight_flush?(hand)
-          return :straight_flush
+          :straight_flush
         elsif four_card?(hand)
-          return :four_card
+          :four_card
         elsif full_house?(hand)
-          return :full_house
+          :full_house
         elsif flush?(hand)
-          return :flush
+          :flush
         elsif straight?(hand)
-          return :straight
+          :straight
         elsif three_card?(hand)
-          return :three_card
+          :three_card
         elsif two_pair?(hand)
-          return :two_pair
+          :two_pair
         elsif one_pair?(hand)
-          return :one_pair
+          :one_pair
         else
-          return :high_card
+          :high_card
         end
       end
 
