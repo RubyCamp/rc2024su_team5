@@ -1,6 +1,9 @@
 require 'gosu'
+
 require_relative 'user'
+
 # ゲームのメインウィンドウ（メインループ）用クラス
+
 class MainWindow < Gosu::Window
   # 各種定数定義
   WIDTH = 800
