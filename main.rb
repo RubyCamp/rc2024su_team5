@@ -1,12 +1,5 @@
 require 'gosu'
 
-require_relative 'scenes/manager'
-require_relative 'scenes/director_base'
-require_relative 'scenes/title/director'
-require_relative 'scenes/game/director'
-require_relative 'scenes/ending/director'
-require_relative 'scenes/game_over/director'
-
 # ゲームのメインウィンドウ（メインループ）用クラス
 class MainWindow < Gosu::Window
   # 各種定数定義
