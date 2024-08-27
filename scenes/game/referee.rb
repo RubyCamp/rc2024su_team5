@@ -1,27 +1,39 @@
 module Scenes
   module Game
     class Referee
+      def judge_winner(players)
+        players.each do |player|
+          roles << judge_role(player.hand)
+        end
+
+        if roles.count(roles.max) > 1
+          "draw"
+        else
+          players[roles.index(roles.max)]
+        end
+      end
+
       def judge_role(hand)
         if royal_straight_flush?(hand)
-          :royal_straight_flush
+          9
         elsif straight_flush?(hand)
-          :straight_flush
+          8
         elsif four_card?(hand)
-          :four_card
+          7
         elsif full_house?(hand)
-          :full_house
+          6
         elsif flush?(hand)
-          :flush
+          5
         elsif straight?(hand)
-          :straight
+          4
         elsif three_card?(hand)
-          :three_card
+          3
         elsif two_pair?(hand)
-          :two_pair
+          2
         elsif one_pair?(hand)
-          :one_pair
+          1
         else
-          :high_card
+          0
         end
       end
 
