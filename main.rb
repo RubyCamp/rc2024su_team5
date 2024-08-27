@@ -6,7 +6,7 @@ require_relative 'scenes/title/director'
 require_relative 'scenes/game/director'
 require_relative 'scenes/ending/director'
 require_relative 'scenes/game_over/director'
-
+require_relative 'scenes/testscens/director'
 # ゲームのメインウィンドウ（メインループ）用クラス
 class MainWindow < Gosu::Window
   # 各種定数定義
@@ -19,6 +19,7 @@ class MainWindow < Gosu::Window
     super WIDTH, HEIGHT, FULL_SCREEN
     self.caption = 'RubyCamp2024Summer Example'
 
+    @testscens = Scenes::Testscens::Director.new
     @scene_manager = Scenes::Manager.instance
     @scene_manager.add(:title, Scenes::Title::Director.new)
     @scene_manager.add(:game, Scenes::Game::Director.new)
@@ -34,12 +35,12 @@ class MainWindow < Gosu::Window
       mx: self.mouse_x,
       my: self.mouse_y
     }
-    @scene_manager.update(opt)
+    @testscens.update(opt)
   end
 
   # 1フレーム分の描画処理
   def draw
-    @scene_manager.draw
+    @testscens.draw
   end
 end
 
