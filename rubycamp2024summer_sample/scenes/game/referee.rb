@@ -16,11 +16,14 @@ class Referee
     @players[0].hand = @deck.pop(5)
     @players[1].hand = @deck.pop(5)
 
+    winner_check
+
     # カード画像の読み込み（背景用）
     @card_image = Gosu::Image.new("cards/card_foreground.png")
   end
   
   def winner_check
-    
+    player0 = @player[0].hand
+    player1 = @plyaer[1].hand
   end
 end
