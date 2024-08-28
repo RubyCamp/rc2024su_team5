@@ -1,71 +1,69 @@
 class RoleJudge
-  def initialize
+  def initialize(players)
+    @players = players
   end
 
-  def judge(hand)
-    @hand = hand
-
-    if royal_straight_flush?
-      :royal_straight_flush
-    elsif straight_flush?
-      :straight_flush
-    elsif four_card?
-      :four_card
-    elsif full_house?
-      :full_house
-    elsif flush?
-      :flush
-    elsif straight?
-      :straight
-    elsif three_card?
-      :three_card
-    elsif two_pair?
-      :two_pair
-    elsif one_pair?
-      :one_pair
-    else
-      :high_card
+  def judge
+    @players.each do |player|
+      if player.hand.straight_flush?
+        :straight_flush
+      elsif player.hand.four_of_a_kind?
+        :four_of_a_kind
+      elsif player.hand.full_house?
+        :full_house
+      elsif player.hand.flush?
+        :flush
+      elsif player.hand.straight?
+        :straight
+      elsif player.hand.three_of_a_kind?
+        :three_of_a_kind
+      elsif player.hand.two_pairs?
+        :two_pairs
+      elsif player.hand.one_pair?
+        :one_pair
+      else
+        :high_card
+      end
     end
   end
 
   private
 
-  def royal_straight_flush?
-    @hand.sort!
-    @hand.map(&:suit).uniq.size == 1 && @hand.map(&:number) == [1, 10, 11, 12, 13]
+  def straight_flush?(hand)
+    flush?(hand) && straight?(hand)
   end
 
-  def straight_flush?
-    flush? && straight?
+  def flush?(hand)
+    hand.all? { |card| card.suit == hand.first.suit }
   end
 
-  def four_card?
-    @hand.group_by(&:number).values.map(&:size).include?(4)
+  def straight?(hand)
+    return true if hand.map(&:rank).sort == [1, 10, 11, 12, 13]
+
+    hand.sort_by(&:rank).each_cons(2).all? { |a, b| b.rank - a.rank == 1 }
   end
 
-  def full_house?
-    @hand.group_by(&:number).values.map(&:size).sort == [2, 3]
+  def count_rank(hand)
+    hand.group_by(&:rank).map { |rank, cards| cards.size }.sort
   end
 
-  def flush?
-    @hand.map(&:suit).uniq.size == 1
+  def four_of_a_kind?(hand)
+    count_rank(hand) == [1, 4]
   end
 
-  def straight?
-    @hand.sort!
-    true if 
-    @hand.each_cons(2).all? { |a, b| a.number + 1 == b.number }
+  def full_house?(hand)
+    count_rank(hand) == [2, 3]
   end
 
-  def three_card?
-    @hand.group_by(&:number).values.map(&:size).include?(3)
+  def three_of_a_kind?(hand)
+    count_rank(hand) == [1, 1, 3]
   end
 
-  def two_pair?
-    @hand.group_by(&:number).values.map(&:size).count(2) == 2
+  def two_pairs?(hand)
+    count_rank(hand) == [1, 2, 2]
   end
 
-  def one_pair?
-    @hand.group_by(&:number).values.map(&:size).include?(2)
+  def one_pair?(hand)
+    count_rank(hand) == [1, 1, 1, 2]
   end
 end
