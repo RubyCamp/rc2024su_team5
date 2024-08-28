@@ -22,7 +22,6 @@ module Scenes
         # 各種インスタンス変数の初期化
         @deck = []                                             # 全てのカードを保持する配列
         @cleared = false                                       # ゲームクリアが成立したか否かを保持するフラグ
-        @drag_start_pos = nil                                  # マウスドラッグ用フラグ兼ドラッグ開始位置記憶用変数
         @offset_mx = 0                                         # マウスドラッグ中のカーソル座標補正用変数（X成分用）
         @offset_my = 0                                         # マウスドラッグ中のカーソル座標補正用変数（Y成分用）
 
@@ -58,14 +57,14 @@ module Scenes
         @bgm.play if @bgm && !@bgm.playing?
 
         # マウスの現在座標を変数化しておく
-        mx = opt.has_key?(:mx) ? opt[:mx] : 0
-        my = opt.has_key?(:my) ? opt[:my] : 0
+        mx = opt.key?(:mx) ? opt[:mx] : 0
+        my = opt.key?(:my) ? opt[:my] : 0
+
+        # ユーザーの手札のカードをクリックした場合、そのカードを捨てる
+        @user.trash_card(mx, my) if key_push?(Gosu::MsLeft)
 
         # ゲームクリアフラグが立ち、且つ画面への判定結果表示が完了済みの場合、エンディングシーンへ切り替えを行う
-        if @cleared && @message_display_frame_count == 0
-          @bgm.stop if @bgm && @bgm.playing?
-          transition(:ending)
-        end
+        transition(:ending) if @cleared
       end
 
       # 1フレーム分の描画処理
