@@ -37,13 +37,13 @@ class RoleJudge
   end
 
   def flush?(hand)
-    hand.all? { |card| card.suit == hand.first.suit }
+    hand.all? { |card| card.class == hand.first.class }
   end
 
   def straight?(hand)
-    return true if hand.map(&:rank).sort == [1, 10, 11, 12, 13]
+    return true if hand.map(&:num).sort == [1, 10, 11, 12, 13]
 
-    hand.sort_by(&:rank).each_cons(2).all? { |a, b| b.rank - a.rank == 1 }
+    hand.sort_by(&:num).each_cons(2).all? { |a, b| b.num - a.num == 1 }
   end
 
   def four_of_a_kind?(hand)
