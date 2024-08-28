@@ -4,6 +4,7 @@ require_relative 'card/diamond'
 require_relative 'card/heart'
 require_relative 'card/club'
 require_relative 'user'
+require_relative 'referee'
 
 module Scenes
   module Game
@@ -26,31 +27,9 @@ module Scenes
         @offset_my = 0                                         # マウスドラッグ中のカーソル座標補正用変数（Y成分用）
 
         @user = User.new                                       # ユーザーの情報を保持するインスタンス
+        @referee = Referee.new([@user])                        # 審判の情報を保持するインスタンス
 
-        @finished_trash = false                                # カード捨てが完了したか否かを保持するフラグ
-
-        # 4種のカードについて、それぞれ13枚ずつランダムな座標にカードをばら撒く
-        # NOTE: 各カードのZ値は、生成順に1から順にインクリメントして重ね合わせを表現する
-        z = 1
-        [
-          Card::Spade,
-          Card::Diamond,
-          Card::Heart,
-          Card::Club
-        ].each do |klass|
-          1.upto(SUIT_AMOUNT) do |num|
-            x = 0
-            y = 0
-            @deck << klass.new(num, x, y, z)
-            z += 1
-          end
-        end
-
-        # カードをシャッフルする
-        @deck.shuffle!
-
-        # ユーザにカードを配る
-        User::HAND_LIMIT.times { @user.hand << @deck.shift }
+        @finished_trash = false                                # ユーザーのカード捨てが完了したか否かを保持するフラグ
       end
 
       # 1フレーム分の更新処理
