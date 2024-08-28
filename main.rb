@@ -1,4 +1,5 @@
 require 'gosu'
+require_relative 'card'
 
 # ゲームのメインウィンドウ（メインループ）用クラス
 class MainWindow < Gosu::Window
