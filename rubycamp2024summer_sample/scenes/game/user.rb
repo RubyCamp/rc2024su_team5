@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative 'player'
 require_relative 'card/base'
 require_relative 'card/club'
@@ -11,7 +12,12 @@ class User < Player
     super
   end
 
-  def trash_card
-    @hand.delete_if { |card| card.clicked?(@mouse_x, @mouse_y) }
+  def trash_card(mx, my)
+    @hand.each_with_index do |card, i|
+      if card.clicked?(mx, my)
+        @hand.delete_at(i)
+        break
+      end
+    end
   end
 end
