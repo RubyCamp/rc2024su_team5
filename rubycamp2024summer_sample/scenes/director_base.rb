@@ -1,7 +1,7 @@
 module Scenes
   # ディレクタークラスの共通部分
   class DirectorBase
-    FONT_FILENAME = "DelaGothicOne-Regular.ttf" # 画面描画用フォントファイル名
+    FONT_FILENAME = "Lobster-Regular.ttf" # 画面描画用フォントファイル名
     RIGHT_MARGIN = 10 # 文字列描画における右端寄せ指定の際の右側余白ピクセル数
 
     @@key_state = {} # キーの押下判定（押しっ放しではなく、1回押して離すまでを1回と捉える判定）用キャッシュ
@@ -10,7 +10,7 @@ module Scenes
     def initialize
       @fonts = {
         base: Gosu::Font.new(32, name: FONT_FILENAME),
-        title: Gosu::Font.new(110, name: FONT_FILENAME),
+        title: Gosu::Font.new(120, name: FONT_FILENAME),
         score: Gosu::Font.new(64, name: FONT_FILENAME),
         judgement_result: Gosu::Font.new(128, name: FONT_FILENAME),
       }
@@ -18,7 +18,7 @@ module Scenes
       @colors = {
         black: 0xff_000000,
         white: 0xff_ffffff,
-        red: 0xff_ff0000,
+        red: 0xff_8B0000,
         green: 0xff_00ff00,
         blue: 0xff_0000ff,
       }
