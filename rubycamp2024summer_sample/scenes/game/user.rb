@@ -1,35 +1,17 @@
 require 'gosu'
 require_relative 'player'
-
+require_relative 'card/base'
+require_relative 'card/club'
+require_relative 'card/diamond'
+require_relative 'card/heart'
+require_relative 'card/spade'
 
 class User < Player
   def initialize
     super
   end
 
-  def button_down(id)
-    if id == Gosu::MsLeft
-      # マウスがクリックされた時の処理
-      @player_images.each_with_index do |image, index|
-        if mouse_over_card?(index)
-          discard_card(index)
-          break
-        end
-      end
-    end
-  end
-
- 
-  def mouse_over_card?(index)
-    mouse_x.between?(50 + index * 150, 50 + index * 150 + @player_images[index].width) &&
-    mouse_y.between?(200, 200 + @player_images[index].height)
-  end
-  
   def trash_card
-   # 指定されたカードを捨てる
-   @hand.delete_at(index)
-   @player_images.delete_at(index)
-   puts "カードを捨てました: #{@hand}"
+    @hand.delete_if { |card| card.clicked?(@mouse_x, @mouse_y) }
   end
-  
 end
