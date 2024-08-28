@@ -1,30 +1,47 @@
-class Referee
-  def initialize
-    super 800, 600,true
-    self.caption = "トランプ表示"
+require_relative 'card/base'
+require_relative 'card/spade'
+require_relative 'card/diamond'
+require_relative 'card/heart'
+require_relative 'card/club'
+require_relative 'player'
 
-    # 山札を作成する
-    @suits = ['♥', '♦', '♣', '♠']
-    @ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-    @deck = @suits.product(@ranks).map { |suit, rank| { suit: suit, rank: rank } }
+module Scenes
+  module Game
+    class Referee
+      SUIT_AMOUNT = 13                  # 各マーク毎のカード枚数
 
-    # 山札をシャッフルして5枚を配布
-    @deck.shuffle!
-    @players = []
-    @players << User.new
-    @players << Computer.new
-    @players[0].hand = @deck.pop(5)
-    @players[1].hand = @deck.pop(5)
+      def initialize(players)
+      @players = players
+      @deck = []
 
-    winner_check
+      # 4種のカードについて、それぞれ13枚ずつ生成してデッキに追加する
+      [
+        Card::Spade,
+        Card::Diamond,
+        Card::Heart,
+        Card::Club
+      ].each do |klass|
+        1.upto(SUIT_AMOUNT) do |num|
+          @deck << klass.new(num, 0, 0, 0)
+        end
+      end
 
-    # カード画像の読み込み（背景用）
-    @card_image = Gosu::Image.new("cards/card_foreground.png")
-  end
-  
-  def winner_check
-    #rolegudge
-    player0 = @player[0].hand
-    player1 = @plyaer[1].hand
+      # カードをシャッフルする
+      @deck.shuffle!
+
+      # プレイヤーにカードを配る
+      @players.each do |player|
+        Player::HAND_LIMIT.times do
+          player.hand << @deck.shift
+        end
+      end
+      end
+
+      def winner_check
+      #rolegudge
+      player0 = @player[0].hand
+      player1 = @plyaer[1].hand
+      end
+    end
   end
 end
