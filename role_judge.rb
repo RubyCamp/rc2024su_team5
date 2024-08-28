@@ -9,23 +9,23 @@ class RoleJudge
   def judge
     @players.each do |player|
       if player.hand.straight_flush?
-        :straight_flush
+        8
       elsif player.hand.four_of_a_kind?
-        :four_of_a_kind
+        7
       elsif player.hand.full_house?
-        :full_house
+        6
       elsif player.hand.flush?
-        :flush
+        5
       elsif player.hand.straight?
-        :straight
+        4
       elsif player.hand.three_of_a_kind?
-        :three_of_a_kind
+        3
       elsif player.hand.two_pairs?
-        :two_pairs
+        2
       elsif player.hand.one_pair?
-        :one_pair
+        1
       else
-        :high_card
+        0
       end
     end
   end
