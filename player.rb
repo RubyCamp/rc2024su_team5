@@ -1,7 +1,7 @@
 # Playerクラス（userクラスとcomputerクラスの基幹クラス）
 class Player
   INITIAL_POINT = 50  # 初期ポイント
-  HAND_LIMIT = 5     # 手札の上限
+  HAND_LIMIT = 5      # 手札の上限
 
   attr_reader :hand, :point
 
