@@ -10,12 +10,16 @@ class Referee
 
     # 山札をシャッフルして5枚を配布
     @deck.shuffle!
-    @player_hand = @deck.pop(5)
+    @players = []
+    @players << User.new
+    @players << Computer.new
+    @players[0].hand = @deck.pop(5)
+    @players[1].hand = @deck.pop(5)
 
     # カード画像の読み込み（背景用）
     @card_image = Gosu::Image.new("cards/card_foreground.png")
   end
-
+  
   def winner_check
     
   end
