@@ -35,7 +35,7 @@ module Scenes
       # プレイヤーにカードを配る
       @players.each do |player|
         Player::HAND_LIMIT.times do
-          player.hand << @deck.shift
+          player.receive_card(@deck.shift)
         end
       end
       end
