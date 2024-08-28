@@ -7,7 +7,7 @@ module Scenes
               super
               
               # 背景画像の読み込み
-              @bg = Gosu::Image.new("images/bg2.jpg", tileable: true)
+              @bg = Gosu::Image.new("images/bg1.jpg", tileable: true)
               
               # フォントの設定
               @font_title = Gosu::Font.new(80)
