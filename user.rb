@@ -1,4 +1,6 @@
+require 'gosu'
 require_relative 'player'
+
 
 class User < Player
   def initialize
@@ -25,9 +27,9 @@ class User < Player
   
   def trash_card
    # 指定されたカードを捨てる
-   @player_hand.delete_at(index)
+   @hand.delete_at(index)
    @player_images.delete_at(index)
-   puts "カードを捨てました: #{@player_hand}"
+   puts "カードを捨てました: #{@hand}"
   end
   
 end
