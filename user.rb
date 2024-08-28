@@ -7,6 +7,9 @@ class User < Player
     super
   end
 
+   # カード画像の読み込み（背景用）
+   @player_images = Gosu::Image.new("cards/card_foreground.png")
+
   def button_down(id)
     if id == Gosu::MsLeft
       # マウスがクリックされた時の処理
