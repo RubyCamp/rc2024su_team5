@@ -6,25 +6,25 @@ class RoleJudge
     @hand = hand
 
     if royal_straight_flush?
-
+      :royal_straight_flush
     elsif straight_flush?
-
+      :straight_flush
     elsif four_card?
-
+      :four_card
     elsif full_house?
-
+      :full_house
     elsif flush?
-
+      :flush
     elsif straight?
-
+      :straight
     elsif three_card?
-
+      :three_card
     elsif two_pair?
-
+      :two_pair
     elsif one_pair?
-
+      :one_pair
     else
-
+      :high_card
     end
   end
 
@@ -53,6 +53,7 @@ class RoleJudge
 
   def straight?
     @hand.sort!
+    true if 
     @hand.each_cons(2).all? { |a, b| a.number + 1 == b.number }
   end
 
