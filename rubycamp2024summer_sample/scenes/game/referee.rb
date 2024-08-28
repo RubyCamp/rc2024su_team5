@@ -4,6 +4,8 @@ require_relative 'card/diamond'
 require_relative 'card/heart'
 require_relative 'card/club'
 require_relative 'player'
+require_relative 'referee'
+require_relative 'role_judge'
 
 module Scenes
   module Game
@@ -13,6 +15,7 @@ module Scenes
       def initialize(players)
       @players = players
       @deck = []
+      @judge = RoleJudge.new
 
       # 4種のカードについて、それぞれ13枚ずつ生成してデッキに追加する
       [
@@ -38,9 +41,11 @@ module Scenes
       end
 
       def winner_check
-      #rolegudge
-      player0 = @player[0].hand
-      player1 = @plyaer[1].hand
+        @players.each do |player|
+          roles << @judge.judge(player)
+        end
+
+        @players[roles.index(roles.max)]
       end
     end
   end
