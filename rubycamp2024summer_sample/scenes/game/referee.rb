@@ -23,6 +23,7 @@ class Referee
   end
   
   def winner_check
+    #rolegudge
     player0 = @player[0].hand
     player1 = @plyaer[1].hand
   end
