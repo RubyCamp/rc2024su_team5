@@ -1,8 +1,11 @@
+# 役判定クラス
 class RoleJudge
+  # コンストラクタ
   def initialize(players)
     @players = players
   end
 
+  # 役判定
   def judge
     @players.each do |player|
       if player.hand.straight_flush?
@@ -27,6 +30,7 @@ class RoleJudge
     end
   end
 
+  # 以下、各役の判定メソッド
   private
 
   def straight_flush?(hand)
