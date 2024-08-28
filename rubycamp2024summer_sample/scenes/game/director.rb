@@ -27,6 +27,8 @@ module Scenes
 
         @user = User.new                                       # ユーザーの情報を保持するインスタンス
 
+        @finished_trash = false                                # カード捨てが完了したか否かを保持するフラグ
+
         # 4種のカードについて、それぞれ13枚ずつランダムな座標にカードをばら撒く
         # NOTE: 各カードのZ値は、生成順に1から順にインクリメントして重ね合わせを表現する
         z = 1
@@ -61,7 +63,7 @@ module Scenes
         my = opt.key?(:my) ? opt[:my] : 0
 
         # ユーザーの手札のカードをクリックした場合、そのカードを捨てる
-        @user.trash_card(mx, my) if key_push?(Gosu::MsLeft)
+        @user.trash_card(mx, my) if key_push?(Gosu::MsLeft) && !@finished_trash
 
         # ゲームクリアフラグが立ち、且つ画面への判定結果表示が完了済みの場合、エンディングシーンへ切り替えを行う
         transition(:ending) if @cleared
