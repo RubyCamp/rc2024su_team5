@@ -1,30 +1,33 @@
 module Scenes
   module Title
-    # タイトルシーンの担当ディレクタークラス
-    class Director < DirectorBase
-      # コンストラクタ
-      def initialize
-        super
-        @bg_img = Gosu::Image.new("images/bg_title.png", tileable: true)
-        @bgm = load_bgm("bgm1.mp3", 0.3)
-      end
+  # タイトルシーンの担当ディレクタークラス
+      class Director < DirectorBase
 
-      # 1フレーム分の更新処理
-      def update(opt = {})
-        @bgm.play if @bgm && !@bgm.playing?
-        # スペースキー押下でゲーム本編シーンへ切り替えを行う
-        if key_push?(Gosu::KB_SPACE)
-          transition(:game)
-          @bgm.stop if @bgm && @bgm.playing?
-        end
-      end
+          def initialize
+              super
+              
+              # 背景画像の読み込み
+              @bg = Gosu::Image.new("images/bg2.jpg", tileable: true)
+              
+              # フォントの設定
+              @font_title = Gosu::Font.new(80)
 
-      # 1フレーム分の描画処理
-      def draw
-        @bg_img.draw(0, 0, 0)
-        draw_text("Ruby合宿2024夏 Example Game", :center, 280, font: :title, color: :red)
-        draw_text("Push SPACE Key to start", :center, 350)
+              @font_subtitle = Gosu::Font.new(35)
+          end
+
+          def update(opt = {})
+              if key_push?(Gosu::KB_SPACE)
+                  transition(:game)
+              end
+          end
+
+          def draw
+              @bg.draw(0, 0, 0)
+              
+              # テキストの描画
+              draw_text("Poker Game", :center, 230, font: :title, color: :red, size:200)
+              @font_subtitle.draw_text("START (SPACE) ", 260, 340, 1, 1.0, 1.0, Gosu::Color::WHITE)
+          end
       end
-    end
   end
 end
