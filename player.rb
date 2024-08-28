@@ -3,7 +3,7 @@ class Player
   INITIAL_POINT = 50  # 初期ポイント
   HAND_LIMIT = 5      # 手札の上限
 
-  attr_reader :hand, :point
+  attr_accessor :hand, :point
 
   # インスタンス変数の初期化
   def initialize
@@ -15,12 +15,12 @@ class Player
 
   # 手札を初期化
   def initialize_hand(referee)
-    HAND_LIMIT.times { @hands << referee.draw_from_deck }
+    HAND_LIMIT.times { @hands << referee.draw_from_deck(self) }
   end
 
   # カードを引く
   def draw_card(referee, draw_times)
-    draw_times.times { @hands << referee.draw_from_deck }
+    draw_times.times { @hands << referee.draw_from_deck(self) }
   end
 
   protected
