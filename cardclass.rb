@@ -60,6 +60,7 @@ class CardGameWindow < Gosu::Window
     @player_hand.delete_at(index)
     # puts "カードを捨てました: #{@player_hand}"
   end
+  
 end
 
 # ゲームウィンドウを作成し、開始する
