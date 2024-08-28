@@ -2,7 +2,7 @@ class RoleJudge
   def initialize
   end
 
-  def judge
+  def judge(hand)
   end
 
   private
