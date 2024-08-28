@@ -1,37 +1,36 @@
 # 役判定クラス
 class RoleJudge
-  # コンストラクタ
-  def initialize(players)
-    @players = players
-  end
-
   # 役判定
-  def judge
-    @players.each do |player|
-      if player.hand.straight_flush?
-        8
-      elsif player.hand.four_of_a_kind?
-        7
-      elsif player.hand.full_house?
-        6
-      elsif player.hand.flush?
-        5
-      elsif player.hand.straight?
-        4
-      elsif player.hand.three_of_a_kind?
-        3
-      elsif player.hand.two_pairs?
-        2
-      elsif player.hand.one_pair?
-        1
-      else
-        0
-      end
+  def judge(hand)
+    if hand.straight_flush?
+      8
+    elsif hand.four_of_a_kind?
+      7
+    elsif hand.full_house?
+      6
+    elsif hand.flush?
+      5
+    elsif hand.straight?
+      4
+    elsif hand.three_of_a_kind?
+      3
+    elsif hand.two_pairs?
+      2
+    elsif hand.one_pair?
+      1
+    else
+      0
     end
   end
 
-  # 以下、各役の判定メソッド
   private
+
+  # 各ランクの枚数を数える
+  def count_rank(hand)
+    hand.group_by(&:rank).map { |_rank, cards| cards.size }.sort!.compact!
+  end
+
+  # 以下、各役の判定メソッド
 
   def straight_flush?(hand)
     flush?(hand) && straight?(hand)
@@ -45,10 +44,6 @@ class RoleJudge
     return true if hand.map(&:rank).sort == [1, 10, 11, 12, 13]
 
     hand.sort_by(&:rank).each_cons(2).all? { |a, b| b.rank - a.rank == 1 }
-  end
-
-  def count_rank(hand)
-    hand.group_by(&:rank).map { |rank, cards| cards.size }.sort
   end
 
   def four_of_a_kind?(hand)
