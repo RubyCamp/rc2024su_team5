@@ -1,7 +1,7 @@
 # Playerクラス（userクラスとcomputerクラスの基幹クラス）
 class Player
   INITIAL_POINT = 50  # 初期ポイント
-  HANDS_LIMIT = 5     # 手札の上限
+  HAND_LIMIT = 5     # 手札の上限
 
   attr_reader :hand, :point
 
@@ -15,7 +15,7 @@ class Player
 
   # 手札を初期化
   def initialize_hand(referee)
-    HANDS_LIMIT.times { @hands << referee.draw_from_deck }
+    HAND_LIMIT.times { @hands << referee.draw_from_deck }
   end
 
   # カードを引く
