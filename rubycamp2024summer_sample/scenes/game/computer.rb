@@ -13,8 +13,6 @@ class Computer < Player
       card_num[num - 1] += 1
     end
 
-    @hand.each_with_index do |card, i|
-      @hand.delete_at(i) if card_num[card.num - 1] == 1
-    end
+    @hand.reject! { |card| card_num[card.num - 1] == 1 }
   end
 end
