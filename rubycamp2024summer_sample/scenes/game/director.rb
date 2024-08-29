@@ -101,9 +101,8 @@ module Scenes
         # ゲームクリア判定結果の表示
         if @redrawed_com && @redrawed
           clear_text = @referee.winner_check
-          font = Gosu::Font.new(24, name: FONT_FILENAME)
-          font.draw_text(clear_text, 200, 300, 3, 1.0, 1.0, Gosu::Color::BLACK)
-          p clear_text
+          font = Gosu::Font.new(24, name: 'DelaGothicOne-Regular.ttf')
+          font.draw_text(clear_text, 0, 0, 10, 3.0, 3.0, Gosu::Color::WHITE)
         end
       end
     end
