@@ -2,32 +2,30 @@
 class RoleJudge
   # 役判定
   def judge(hand)
-    if hand.straight_flush?
+    if straight_flush?(hand)
       8
-    elsif hand.four_of_a_kind?
+    elsif four_of_a_kind?(hand)
       7
-    elsif hand.full_house?
+    elsif full_house?(hand)
       6
-    elsif hand.flush?
+    elsif flush?(hand)
       5
-    elsif hand.straight?
+    elsif straight?(hand)
       4
-    elsif hand.three_of_a_kind?
+    elsif three_of_a_kind?(hand)
       3
-    elsif hand.two_pairs?
+    elsif two_pairs?(hand)
       2
-    elsif hand.one_pair?
+    elsif one_pair?(hand)
       1
     else
       0
     end
   end
 
-  private
-
   # 各ランクの枚数を数える
   def count_rank(hand)
-    hand.group_by(&:rank).map { |_rank, cards| cards.size }.sort!.compact!
+    hand.group_by(&:num).map { |_num, cards| cards.size }.sort!.compact!
   end
 
   # 以下、各役の判定メソッド
