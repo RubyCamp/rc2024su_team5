@@ -6,14 +6,17 @@ class Computer < Player
   end
 
   def trash_card
-    dmp = @hand.map { |card| card.num }.tally
-    trash_num = dmp.select { |_, v| v == 1 }
+    card_num = Array.new(13) { 0 }
+
+    dmp = @hand.map(&:num)
+    dmp.each do |num|
+      card_num[num - 1] += 1
+    end
+
+    p card_num
 
     @hand.each_with_index do |card, i|
-      if trash_num.include?(card.num)
-        @hand.delete_at(i)
-        break
-      end
+      @hand.delete_at(i) if card_num[card.num - 1] == 1
     end
   end
 end

@@ -27,6 +27,7 @@ module Scenes
         @cleared = false                                       # ゲームクリアが成立したか否かを保持するフラグ
         @trashed = false                                       # カードを捨てたか否かを保持するフラグ
         @redrawed = false                                      # カードの再ドローが完了したか否かを保持するフラグ
+        @trashed_com = false                                   # コンピューターがカードを捨てたか否かを保持するフラグ
         @offset_mx = 0                                         # マウスドラッグ中のカーソル座標補正用変数（X成分用）
         @offset_my = 0                                         # マウスドラッグ中のカーソル座標補正用変数（Y成分用）
 
@@ -56,6 +57,12 @@ module Scenes
           @redrawed = true
         end
 
+        # コンピューターが手札を捨てる
+        if @redrawed && !@trashed_com
+          @computer.trash_card
+          @trashed_com = true
+        end
+
         # ゲームクリアフラグが立ち、且つ画面への判定結果表示が完了済みの場合、エンディングシーンへ切り替えを行う
         transition(:ending) if @cleared
       end
@@ -75,8 +82,15 @@ module Scenes
           card.open
           card.draw
         end
-      end
 
+        # コンピューターの手札を横に並べて描画
+        @computer.hand.each_with_index do |card, i|
+          card.x = 100 + i * 120
+          card.y = 100
+          card.open
+          card.draw
+        end
+      end
     end
   end
 end
