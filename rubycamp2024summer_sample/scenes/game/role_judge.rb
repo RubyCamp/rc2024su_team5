@@ -25,7 +25,14 @@ class RoleJudge
 
   # 各ランクの枚数を数える
   def count_rank(hand)
-    hand.group_by(&:num).map { |_num, cards| cards.size }.sort!.compact!
+    card_num = Array.new(13) { 0 }
+
+    dmp = hand.map(&:num)
+    dmp.each do |num|
+      card_num[num - 1] += 1
+    end
+
+    card_num.sort.select { |num| num != 0 }
   end
 
   # 以下、各役の判定メソッド
@@ -39,9 +46,16 @@ class RoleJudge
   end
 
   def straight?(hand)
-    return true if hand.map(&:num).sort == [1, 10, 11, 12, 13]
+    dmp = []
+    hand.each do |card|
+      dmp << card.num
+    end
 
-    hand.sort_by(&:num).each_cons(2).all? { |a, b| b.num - a.num == 1 }
+    dmp.sort
+
+    return true if dmp == [1, 10, 11, 12, 13]
+
+    dmp.each_cons(2).all? { |a, b| b == a + 1 }
   end
 
   def four_of_a_kind?(hand)

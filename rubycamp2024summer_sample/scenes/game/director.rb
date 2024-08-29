@@ -94,8 +94,23 @@ module Scenes
         @computer.hand.each_with_index do |card, i|
           card.x = 100 + i * 120
           card.y = 100
-          card.open
+          card.reverse
           card.draw
+        end
+
+        if @redrawed_com && @redrawed
+          # コンピューターの手札を横に並べて描画
+          @computer.hand.each_with_index do |card, i|
+            card.x = 100 + i * 120
+            card.y = 100
+            card.open
+            card.draw
+          end
+
+          # ゲームクリア判定結果の表示
+          clear_text = @referee.winner_check
+          font = Gosu::Font.new(24, name: 'DelaGothicOne-Regular.ttf')
+          font.draw_text(clear_text, 0, 0, 10, 3.0, 3.0, Gosu::Color::WHITE)
         end
       end
     end
