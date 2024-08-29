@@ -28,6 +28,7 @@ module Scenes
         @trashed = false                                       # カードを捨てたか否かを保持するフラグ
         @redrawed = false                                      # カードの再ドローが完了したか否かを保持するフラグ
         @trashed_com = false                                   # コンピューターがカードを捨てたか否かを保持するフラグ
+        @redrawed_com = false                                  # コンピューターがカードを再ドローしたか否かを保持するフラグ
         @offset_mx = 0                                         # マウスドラッグ中のカーソル座標補正用変数（X成分用）
         @offset_my = 0                                         # マウスドラッグ中のカーソル座標補正用変数（Y成分用）
 
@@ -53,7 +54,7 @@ module Scenes
 
         # カードを捨てた後、再度カードを引く
         if @trashed && !@redrawed
-          @referee.redraw(@user, User::HAND_LIMIT - @user.hand.size)
+          @referee.redraw(@user, Player::HAND_LIMIT - @user.hand.size)
           @redrawed = true
         end
 
@@ -61,6 +62,12 @@ module Scenes
         if @redrawed && !@trashed_com
           @computer.trash_card
           @trashed_com = true
+        end
+
+        # コンピューターがカードを捨てた後、再度カードを引く
+        if @trashed_com && !@redrawed_com
+          @referee.redraw(@computer, Player::HAND_LIMIT - @computer.hand.size)
+          @redrawed_com = true
         end
 
         # ゲームクリアフラグが立ち、且つ画面への判定結果表示が完了済みの場合、エンディングシーンへ切り替えを行う
