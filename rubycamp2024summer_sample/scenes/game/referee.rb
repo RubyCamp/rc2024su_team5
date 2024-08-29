@@ -53,7 +53,16 @@ module Scenes
           roles << @judge.judge(player.hand)
         end
 
-        @players[roles.index(roles.max)]
+        p_role = roles[0]
+        c_role = roles[1]
+
+        if p_role > c_role
+          "あなたの勝ちです"
+        elsif p_role < c_role
+          "あなたの負けです"
+        else
+          "引き分けです"
+        end
       end
     end
   end
