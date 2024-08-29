@@ -4,7 +4,9 @@ require_relative 'card/diamond'
 require_relative 'card/heart'
 require_relative 'card/club'
 require_relative 'user'
+require_relative 'computer'
 require_relative 'referee'
+require_relative 'role_judge'
 
 module Scenes
   module Game
@@ -23,10 +25,13 @@ module Scenes
         # 各種インスタンス変数の初期化
         @deck = []                                             # 全てのカードを保持する配列
         @cleared = false                                       # ゲームクリアが成立したか否かを保持するフラグ
+        @trashed = false                                       # カードを捨てたか否かを保持するフラグ
+        @redrawed = false                                      # カードの再ドローが完了したか否かを保持するフラグ
         @offset_mx = 0                                         # マウスドラッグ中のカーソル座標補正用変数（X成分用）
         @offset_my = 0                                         # マウスドラッグ中のカーソル座標補正用変数（Y成分用）
 
         @user = User.new                                       # ユーザーの情報を保持するインスタンス
+        @computer = Computer.new                               # コンピュータの情報を保持するインスタンス
         @referee = Referee.new([@user])                        # 審判の情報を保持するインスタンス
       end
 
@@ -40,7 +45,16 @@ module Scenes
         my = opt.key?(:my) ? opt[:my] : 0
 
         # ユーザーの手札のカードをクリックした場合、そのカードを捨てる
-        @user.trash_card(mx, my) if key_push?(Gosu::MsLeft)
+        @user.trash_card(mx, my) if key_push?(Gosu::MsLeft) && !@trashed
+
+        # カードを捨て終わったら、フラグを立てる
+        @trashed = true if key_push?(Gosu::KB_SPACE)
+
+        # カードを捨てた後、再度カードを引く
+        if @trashed && !@redrawed
+          @referee.redraw(@user, User::HAND_LIMIT - @user.hand.size)
+          @redrawed = true
+        end
 
         # ゲームクリアフラグが立ち、且つ画面への判定結果表示が完了済みの場合、エンディングシーンへ切り替えを行う
         transition(:ending) if @cleared
