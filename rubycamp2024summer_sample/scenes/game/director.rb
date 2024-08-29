@@ -32,7 +32,7 @@ module Scenes
 
         @user = User.new                                       # ユーザーの情報を保持するインスタンス
         @computer = Computer.new                               # コンピュータの情報を保持するインスタンス
-        @referee = Referee.new([@user])                        # 審判の情報を保持するインスタンス
+        @referee = Referee.new([@user, @computer])             # 審判の情報を保持するインスタンス
       end
 
       # 1フレーム分の更新処理
