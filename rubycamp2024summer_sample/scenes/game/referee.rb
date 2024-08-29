@@ -47,6 +47,36 @@ module Scenes
 
         @players[roles.index(roles.max)]
       end
+
+      def hand_ranking(hand)
+        # カードの数値とスートを取得
+        values = hand.map { |card| CARD_VALUES[card[0]] }.sort
+        suits = hand.map { |card| card[1] }
+      
+        # 重複を調べる
+        value_counts = values.tally.values
+      
+        # 役の判定
+        if suits.uniq.size == 1 && values.each_cons(2).all? { |a, b| b == a + 1 }
+          # 'ストレートフラッシュ'
+        elsif value_counts == [4, 1]
+          'フォーカード'
+        elsif value_counts == [3, 2]
+          'フルハウス'
+        elsif suits.uniq.size == 1
+          'フラッシュ'
+        elsif values.each_cons(2).all? { |a, b| b == a + 1 }
+          'ストレート'
+        elsif value_counts == [3, 1, 1]
+          'スリーカード'
+        elsif value_counts.sort == [2, 2, 1]
+          'ツーペア'
+        elsif value_counts == [2, 1, 1, 1]
+          'ワンペア'
+        else
+          'ハイカード'
+        end
+      end
     end
   end
 end
